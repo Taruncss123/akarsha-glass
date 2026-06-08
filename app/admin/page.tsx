@@ -2,13 +2,13 @@
 import React, { useState, useEffect } from 'react';
 import { db, auth } from '../../lib/firebase';
 import { collection, addDoc, deleteDoc, doc, onSnapshot } from 'firebase/firestore';
-import { signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
 import Link from 'next/link';
+import { onAuthStateChanged, User } from 'firebase/auth';
 
 const ADMIN_EMAIL = "tcchauhantarun99176@gmail.com"; 
 
 export default function AdminPage() {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState<User | null>(null);
     const [loginEmail, setLoginEmail] = useState('');
     const [loginPassword, setLoginPassword] = useState('');
     const [authError, setAuthError] = useState('');
