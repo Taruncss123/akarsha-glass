@@ -20,9 +20,11 @@ function CollectionContent() {
     useEffect(() => {
         const fetchProducts = async () => {
             const querySnapshot = await getDocs(collection(db, "products"));
-            let items = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            // Line 23 ko aise update karo
+            let items = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as any[];
             if (categoryQuery) {
-                items = items.filter(item => item.category === categoryQuery);
+                // Line 25 ko isse replace karo
+                items = items.filter((item: any) => item.category === categoryQuery);
             }
 
             if (searchParam) {
