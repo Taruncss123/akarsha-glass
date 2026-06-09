@@ -758,19 +758,6 @@ h1, .logo ,h2{
     background: rgba(212, 175, 55, 0.1);
 }
 
-/* Responsive adjustment for mobile */
-@media (max-width: 900px) {
-    .craft-container {
-        flex-direction: column;
-    }
-    .craft-content {
-        margin-left: 0;
-        margin-top: -50px; /* Overlap vertically on mobile */
-        padding: 40px 30px;
-    }
-}
-
-
 
 
 
@@ -1370,13 +1357,7 @@ h1, .logo ,h2{
     
     /* Grid Layouts */
     .product-grid, .category-grid { grid-template-columns: 1fr; }
-    
-    /* Craft Section */
-    .craft-container { flex-direction: column; }
-    .craft-content { margin-left: 0; margin-top: -30px; }
-} /* <--- Media query yahan band ho gayi */
-
-/* --- Footer aur Sidebar ko Media Query ke BAHAR rakho --- */
+}
 .cart-sidebar {
     width: 100%;
 }
@@ -1393,4 +1374,139 @@ h1, .logo ,h2{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 40px;
+}
+/* 🚀 MOBILE RESPONSIVENESS MAGICAL FIX */
+@media screen and (max-width: 768px) {
+    
+    /* 1. Page ki padding kam karo taaki screen par jagah mile */
+    main {
+        padding: 80px 15px !important;
+    }
+
+    /* 2. Main Headings ko chhota karo */
+    h1 { font-size: 2.2rem !important; }
+    h2 { font-size: 1.8rem !important; }
+
+    /* 3. Product Cards ko adjust karo */
+    .glass-product-card {
+        padding-bottom: 15px !important;
+    }
+    .glass-product-card > div:first-child {
+        height: 220px !important;
+    }
+    .glass-product-card h3 {
+        font-size: 1.2rem !important;
+        margin-bottom: 5px !important;
+    }
+    .glass-product-card p {
+        font-size: 1rem !important;
+        margin-bottom: 10px !important;
+    }
+    .glass-product-card button,
+    .view-collection-btn {
+        padding: 8px 16px !important;
+        font-size: 0.9rem !important;
+        width: 100% !important;
+    }
+}
+/* 🚀 PREMIUM VERTICAL OVERLAP FIX FOR MOBILE (Luxury Style) */
+@media screen and (max-width: 768px) {
+    
+    .craft-container {
+        display: flex !important;
+        flex-direction: column !important; /* Phone ke liye upar-neeche */
+        align-items: center !important;
+        padding: 20px 15px !important;
+    }
+
+    /* 1. Image ko achi height di (Peeche set kiya) */
+    .craft-image-wrapper {
+        width: 100% !important; 
+        height: 320px !important; /* Image ekdum badi aur clear dikhegi */
+        border-radius: 16px !important;
+        z-index: 1 !important;
+    }
+
+    /* 2. THE MAGIC: Glass Card ko Image ke upar khinch liya (Negative Margin) */
+    .craft-content, .glass-craft-card {
+        width: 90% !important; /* Image se thoda patla taaki peechhe se image ke edges dikhein */
+        margin-top: -80px !important; /* 🔥 YAHAN HAI ASLI OVERLAP JAADU (Card image ke upar chadhega) */
+        z-index: 2 !important; /* Image ke aage rakha */
+        padding: 30px 20px !important;
+        
+        /* Glass Effect */
+        background: rgba(10, 10, 10, 0.7) !important; 
+        backdrop-filter: blur(15px) !important; 
+        border: 1px solid rgba(212, 175, 55, 0.3) !important; /* Premium Gold Border */
+        border-radius: 16px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 3. Text ko wapas readable aur premium size mein set kiya */
+    .craft-content .subtitle { 
+        font-size: 0.8rem !important; 
+        letter-spacing: 2px !important; 
+    }
+    
+    .craft-content h2 { 
+        font-size: 1.8rem !important; 
+        line-height: 1.2 !important; 
+        margin-bottom: 15px !important; 
+    }
+    
+    .craft-content p { 
+        font-size: 1rem !important; 
+        line-height: 1.5 !important; 
+        margin-bottom: 20px !important; 
+    }
+    
+    .craft-features { 
+        margin-top: 0 !important; 
+    }
+    
+    .craft-features li { 
+        font-size: 0.95rem !important; 
+        margin-bottom: 10px !important; 
+    }
+    
+    /* 4. Button ko phone par poori width di (Touch-friendly) */
+    .cta-btn.b2b-btn {
+        display: block !important;
+        width: 100% !important; 
+        text-align: center !important;
+        padding: 15px !important;
+        font-size: 1rem !important;
+        margin-top: 15px !important;
+    }
+}
+/* 🚀 MOBILE FIX FOR ADMIN DASHBOARD */
+@media screen and (max-width: 768px) {
+    
+    /* 1. Form aur Live Items ko aamne-saamne se hata kar Upar-Neeche karo */
+    .admin-grid {
+        grid-template-columns: 1fr !important; /* Phone par sirf 1 column chalega */
+        gap: 20px !important;
+    }
+
+    /* 2. Admin Header ko phone ke hisaab se center karo */
+    .admin-header {
+        flex-direction: column !important; /* Title upar, button neeche */
+        gap: 15px !important;
+        text-align: center;
+    }
+
+    /* 3. Live Items wale box ki height phone par kam karo taaki poori screen na gher le */
+    .admin-grid > div:nth-child(2) {
+        max-height: 500px !important; /* PC par 1000px tha, phone par 500px theek hai */
+        padding: 20px !important;
+    }
+
+    /* 4. Inputs ko thoda touch-friendly banao */
+    .admin-grid input, 
+    .admin-grid select, 
+    .admin-grid textarea, 
+    .admin-grid button {
+        font-size: 1rem !important; /* Phone par type karne mein aasaani hogi */
+        padding: 12px !important;
+    }
 }

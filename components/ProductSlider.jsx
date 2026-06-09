@@ -56,7 +56,7 @@ export default function ProductSlider() {
                 grabCursor={true}
                 centeredSlides={true}
                 slidesPerView={'auto'}
-                loop={false} 
+                loop={true} 
                 autoplay={{ delay: 3500, disableOnInteraction: false }}
                 coverflowEffect={{
                     rotate: 0, stretch: 0, depth: 250, modifier: 1.2, slideShadows: false, 
@@ -65,12 +65,31 @@ export default function ProductSlider() {
                 modules={[EffectCoverflow, Pagination, Autoplay]}
                 className="mySwiper"
                 style={{ width: '100%', paddingBottom: '60px' }}
+                spaceBetween={30}
+                breakpoints={{
+                320: {
+                        slidesPerView: 1.2,
+                        spaceBetween: 15,
+                    },
+                480: {
+                        slidesPerView: 1.5,
+                        spaceBetween: 20,
+                    },
+                768: {
+                        slidesPerView: 2,
+                        spaceBetween: 20,
+                    },
+                1024: {
+                        slidesPerView: 3,
+                        spaceBetween: 30,
+        },
+    }}
             >
                 {featured.map((product) => {
                     const finalPrice = Math.round(product.price - (product.price * (product.discount || 0)) / 100);
 
                     return (
-                        <SwiperSlide key={product.id} style={{ width: '400px' }} className="blur-slide">
+                <SwiperSlide key={product.id}style={{width: '400px' }} className="blur-slide">spaceBetween={30}
                             <div className="glass-product-card" style={{ paddingBottom: '20px' }}>
                                 <div className="product-img-wrapper" style={{ height: '400px', position: 'relative' }}>
                                     {/* 🚀 FIXED: Next.js Image legacy props issue */}

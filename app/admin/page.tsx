@@ -166,12 +166,12 @@ export default function AdminPage() {
     return (
         <main style={{ minHeight: '100vh', padding: '60px 20px', background: '#050505', color: '#fff' }}>
             <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px', borderBottom: '1px solid #222', paddingBottom: '20px' }}>
+                <div className="admin-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px', borderBottom: '1px solid #222', paddingBottom: '20px' }}>
                     <h1 style={{ color: '#d4af37' }}>Admin Dashboard</h1>
                     <button onClick={() => signOut(auth)} style={{ background: 'transparent', color: '#ff4d4d', border: '1px solid #ff4d4d', padding: '8px 20px', borderRadius: '25px', cursor: 'pointer' }}>Logout</button>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px' }}>
+                <div className="admin-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px' }}>
                     
                     {/* Left Column: Forms */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>

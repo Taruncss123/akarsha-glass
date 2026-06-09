@@ -1,5 +1,4 @@
 import Navbar from '../../components/Navbar';
-import Footer from '../../components/Footer';
 import Craftsmanship from '../../components/Craftsmanship';
 
 export default function RoyalVillas() {
@@ -12,7 +11,6 @@ export default function RoyalVillas() {
             </div>
             {/* Same craftsmanship component reused here for B2B feel */}
             <Craftsmanship />
-            <Footer />
         </main>
     );
 }

@@ -44,7 +44,7 @@ export default function Navbar() {
           <ul className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
             <li><Link href="/collections" onClick={toggleMenu}><i className="fa-solid fa-list"></i> Collections</Link></li>
             <li><Link href="/royal-villas" onClick={toggleMenu}><i className="fa-solid fa-crown"></i> Royal Villas</Link></li>
-            <li><Link href="/collections?cat=Borosilicate Series" onClick={toggleMenu}><i className="fa-solid fa-gem"></i> Borosilicate</Link></li>
+            <li><Link href="/collections?category=Borosilicate Series" onClick={toggleMenu}><i className="fa-solid fa-gem"></i> Borosilicate</Link></li>
             <li><Link href="/contact" onClick={toggleMenu}><i className="fa-solid fa-envelope"></i> Contact</Link></li>
           </ul>
         </div>
