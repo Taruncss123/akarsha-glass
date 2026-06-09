@@ -12,7 +12,7 @@ import Image from 'next/image';
 function CollectionContent() {
     const searchParams = useSearchParams();
     const categoryQuery = searchParams.get('cat');
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState<any[]>([]);
     const [selectedProduct, setSelectedProduct] = useState(null); // Modal popup handling
     const { addToCart } = useCart();
     const searchParam = searchParams.get('search');
