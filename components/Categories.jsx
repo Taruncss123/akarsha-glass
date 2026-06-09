@@ -1,46 +1,55 @@
 "use client";
-import { motion } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { db } from '../lib/firebase';
+import { collection, onSnapshot } from 'firebase/firestore';
 
 export default function Categories() {
-    // Data mapping clean rakhi hai
-    const cardData = [
-        { icon: "🥗", title: "Premium Bowls", desc: "Handcrafted clarity for elite 5-star dining experiences." },
-        { icon: "🏺", title: "Luxury Jugs", desc: "Elegant and flawless pours designed for royal villas." },
-        { icon: "💎", title: "Borosilicate Series", desc: "High-endurance, crystal-clear artifacts." }
-    ];
+    const [categories, setCategories] = useState([]);
+
+    // Firebase se dynamic categories fetch karna
+    useEffect(() => {
+        const unsub = onSnapshot(collection(db, "categories"), (snapshot) => {
+            const cats = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            setCategories(cats);
+        });
+        return () => unsub();
+    }, []);
 
     return (
-        <section className="categories-section" id="collections">
-            {/* Header Animation */}
-            <motion.div 
-                initial={{ opacity: 0, y: 50 }} 
-                whileInView={{ opacity: 1, y: 0 }} 
-                transition={{ duration: 0.8 }} 
-                className="section-header"
-            >
-                <h2>Signature Collections</h2>
-                <div className="divider"></div>
-            </motion.div>
-            
-            {/* Grid */}
-            <div className="category-grid">
-                {cardData.map((item, index) => (
-                    <motion.div 
-                        key={index} 
-                        whileHover={{ scale: 1.05 }} 
-                        className="glass-category-card"
-                    >
-                        <div className="card-icon">{item.icon}</div>
-                        <h3>{item.title}</h3>
-                        <p>{item.desc}</p>
-                        
-                        {/* 🚀 Dynamic Route Fix: Cat parameter pass ho raha hai */}
-                        <Link href={`/collections?cat=${item.title}`} className="explore-link">
-                            View Collection <span>&rarr;</span>
-                        </Link>
-                    </motion.div>
-                ))}
+        <section style={{ padding: '100px 20px', background: '#0a0a0a' }}>
+            <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+                
+                <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+                    <h2 style={{ fontFamily: 'Playfair Display', fontSize: '3rem', color: '#fff' }}>Signature Collections</h2>
+                    <div style={{ width: '80px', height: '3px', background: '#d4af37', margin: '20px auto 0' }}></div>
+                </div>
+
+                {categories.length === 0 ? (
+                    <p style={{ textAlign: 'center', color: '#888' }}>Loading collections...</p>
+                ) : (
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
+                        {categories.map((cat) => (
+                            <div key={cat.id} style={{ background: '#111', padding: '40px 30px', borderRadius: '15px', textAlign: 'center', border: '1px solid #222', transition: 'transform 0.3s', cursor: 'pointer' }}
+                                onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-10px)'}
+                                onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                            >
+                                <div style={{ fontSize: '3rem', marginBottom: '20px' }}>{cat.icon}</div>
+                                <h3 style={{ color: '#fff', fontSize: '1.5rem', marginBottom: '15px' }}>{cat.name}</h3>
+                                <p style={{ color: '#888', marginBottom: '30px', lineHeight: '1.6' }}>{cat.desc}</p>
+                                
+                                {/* 🚀 FIXED: Dynamic Link */}
+                                <Link 
+                                    href={`/collections?category=${cat.name}`} 
+                                    style={{ color: '#d4af37', textDecoration: 'none', fontWeight: 'bold', letterSpacing: '1px', fontSize: '0.9rem' }}
+                                >
+                                    VIEW COLLECTION &rarr;
+                                </Link>
+                            </div>
+                        ))}
+                    </div>
+                )}
+                
             </div>
         </section>
     );

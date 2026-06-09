@@ -36,7 +36,7 @@ export default function Hero() {
             <div className="hero-content glass-card">
                 <h1>Masterpieces in Glass</h1>
                 <p>Elevating 5-Star Dining & Royal Villas with Exquisite Glass Artifacts, Bowls, and Jugs.</p>
-                <Link href="#collections" className="cta-btn">
+                <Link href="collections" className="cta-btn">
                     Explore 90+ Artifacts
                 </Link>
             </div>

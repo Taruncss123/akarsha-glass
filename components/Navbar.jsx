@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useCart } from './CartContext';
 import { onAuthStateChanged, signOut } from 'firebase/auth'; // Firebase imports
 import { auth } from './firebase-config'
-
+import AuthModal from './AuthModal';
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -14,6 +14,7 @@ export default function Navbar() {
   const [searchQuery, setSearchQuery] = useState('');
   const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
   const [user, setUser] = useState(null);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -70,18 +71,22 @@ export default function Navbar() {
 
           <div className="nav-right">
             {user ? (
-                <button className="action-btn" onClick={handleLogout} title="Logout">
-                  <i className="fas fa-sign-out-alt"></i>
-                </button>
+              <button className="action-btn" onClick={handleLogout} title="Logout">
+                <i className="fas fa-sign-out-alt"></i>
+              </button>
             ) : (
-                <Link href="/auth" className="action-btn" title="Login/Signup">
-                    <i className="fas fa-user"></i>
-                </Link>
+              <button className="action-btn" onClick={() => setIsAuthModalOpen(true)} title="Login/Signup">
+                <i className="fas fa-user"></i>
+              </button>
             )}
             <button className="action-btn" onClick={() => setIsCartOpen(true)} title="View Cart">
               <i className="fa-solid fa-bag-shopping"></i>
               {totalItems > 0 && <span className="cart-badge">{totalItems}</span>}
             </button>
+            <AuthModal 
+              isOpen={isAuthModalOpen} 
+              onClose={() => setIsAuthModalOpen(false)} 
+            />
           </div>
 
           <div className={`hamburger ${isMenuOpen ? 'active' : ''}`} onClick={toggleMenu}>

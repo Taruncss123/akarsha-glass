@@ -6,7 +6,6 @@ import Hero from '../components/Hero';
 import Categories from '../components/Categories';
 import ProductSlider from '../components/ProductSlider'; // Naya Slider import kiya
 import Craftsmanship from '../components/Craftsmanship';
-import Footer from '../components/Footer';
 import CartSidebar from '../components/CartSidebar';
 import GlassShowcase3D from '../components/GlassShowcase3D';
 
@@ -23,7 +22,6 @@ export default function Home() {
       <Categories />
       <ProductSlider /> 
       <Craftsmanship />
-      <Footer />
     </main>
   );
 }
