@@ -1,5 +1,4 @@
 import Navbar from '../../components/Navbar';
-import Footer from '../../components/Footer';
 
 export default function Contact() {
     return (
@@ -16,7 +15,6 @@ export default function Contact() {
                     <button type="submit" style={{ padding: '15px', background: '#d4af37', border: 'none', color: '#000', fontWeight: 'bold', fontSize: '1.1rem', borderRadius: '8px', cursor: 'pointer' }}>Send Inquiry</button>
                 </form>
             </div>
-            <Footer />
         </main>
     );
 }

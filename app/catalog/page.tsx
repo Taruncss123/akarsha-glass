@@ -129,7 +129,6 @@ export default function CatalogPage() {
                         </div>
                     ))}
                     
-                    {/* Footer for Print */}
                     <div style={{ textAlign: 'center', marginTop: '50px', color: '#555', fontSize: '0.9rem', borderTop: '1px solid #333', paddingTop: '20px' }}>
                         <p>For custom orders and royal inquiries, contact the Akarsha Glass administration.</p>
                     </div>
