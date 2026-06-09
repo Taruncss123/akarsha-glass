@@ -12,19 +12,37 @@ import 'swiper/css/pagination';
 
 export default function ProductSlider() {
     const [featured, setFeatured] = useState([]);
+    const [loading, setLoading] = useState(true); // Loading state add kiya
     const { addToCart } = useCart();
 
     useEffect(() => {
         const fetchFeatured = async () => {
-            const querySnapshot = await getDocs(collection(db, "products"));
-            let items = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            const shuffledItems = items.sort(() => 0.5 - Math.random());
-            setFeatured(shuffledItems.slice(0, 7)); 
+            try {
+                const querySnapshot = await getDocs(collection(db, "products"));
+                let items = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                
+                if (items.length > 0) {
+                    const shuffledItems = items.sort(() => 0.5 - Math.random());
+                    setFeatured(shuffledItems.slice(0, 7)); 
+                }
+            } catch (error) {
+                console.error("Firebase fetch error:", error);
+            } finally {
+                setLoading(false); // Fetch hone ke baad loading band
+            }
         };
         fetchFeatured();
     }, []);
 
-    if (featured.length === 0) return null;
+    // Agar loading chal rahi hai, toh blank ki jagah text dikhao
+    if (loading) {
+        return <div style={{ textAlign: 'center', padding: '100px 0', color: '#d4af37', fontSize: '1.5rem' }}>Loading Masterpieces...</div>;
+    }
+
+    // Agar Firebase mein products nahi hain
+    if (featured.length === 0) {
+        return <div style={{ textAlign: 'center', padding: '100px 0', color: '#fff' }}>No products found in database.</div>;
+    }
 
     return (
         <section style={{ padding: '100px 0', background: '#0a0a0a', overflow: 'hidden' }}>
@@ -49,14 +67,20 @@ export default function ProductSlider() {
                 style={{ width: '100%', paddingBottom: '60px' }}
             >
                 {featured.map((product) => {
-                    // 🚀 FIXED: Discount Calculation
                     const finalPrice = Math.round(product.price - (product.price * (product.discount || 0)) / 100);
 
                     return (
                         <SwiperSlide key={product.id} style={{ width: '400px' }} className="blur-slide">
                             <div className="glass-product-card" style={{ paddingBottom: '20px' }}>
                                 <div className="product-img-wrapper" style={{ height: '400px', position: 'relative' }}>
-                                    <Image src={product.img} alt={product.name} layout="fill" objectFit="cover" />
+                                    {/* 🚀 FIXED: Next.js Image legacy props issue */}
+                                    <Image 
+                                        src={product.img || '/placeholder.jpg'} 
+                                        alt={product.name} 
+                                        fill 
+                                        style={{ objectFit: 'cover' }} 
+                                        sizes="(max-width: 768px) 100vw, 400px" 
+                                    />
                                     {product.discount > 0 && (
                                         <span style={{ position: 'absolute', top: 15, right: 15, background: '#ff4d4d', color: '#fff', padding: '5px 10px', borderRadius: '5px', fontWeight: 'bold' }}>
                                             {product.discount}% OFF
@@ -78,7 +102,6 @@ export default function ProductSlider() {
                                         )}
                                     </div>
 
-                                    {/* 🚀 FIXED: Cart mein update hui price jayegi */}
                                     <button className="cta-btn" style={{ fontSize: '0.9rem', padding: '12px 25px' }} onClick={() => addToCart({...product, price: finalPrice})}>
                                         + Add to Cart
                                     </button>
