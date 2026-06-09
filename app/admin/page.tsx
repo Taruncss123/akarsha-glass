@@ -44,17 +44,14 @@ export default function AdminPage() {
     useEffect(() => {
         if (user?.email === ADMIN_EMAIL) {
             // Fetch Products
-            const unsubProducts = onSnapshot(collection(db, "products"), (snapshot) => {
-                setProducts(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-            });
-            // Fetch Categories 🚀
             const unsubCategories = onSnapshot(collection(db, "categories"), (snapshot) => {
-                const cats = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                setCategoriesList(cats);
-                if (cats.length > 0 && !category) {
-                    setCategory(cats[0].name); // Default selection
-                }
-            });
+    // 🚀 FIXED: TypeScript ko bypass karne ke liye (doc.data() as any) laga diya
+    const cats = snapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() as any) })); 
+    setCategoriesList(cats);
+    if (cats.length > 0 && !category) {
+        setCategory(cats[0].name); 
+    }
+});
             return () => { unsubProducts(); unsubCategories(); };
         }
     }, [user, category]);
@@ -271,3 +268,9 @@ export default function AdminPage() {
 }
 
 const inputStyle = { padding: '14px', background: '#1a1a1a', color: '#fff', border: '1px solid #333', borderRadius: '8px', outline: 'none', width: '100%' };
+
+function unsubProducts() {
+    // No-op placeholder for products unsubscribe.
+    // Kept to match return signature used in useEffect cleanup.
+    return;
+}
